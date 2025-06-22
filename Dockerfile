@@ -1,11 +1,10 @@
 FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG DEPENDENCY=target/dependency
+WORKDIR /app
 
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
+# Copiar el jar generado por Maven
+COPY target/svfe-api-firmador.jar app.jar
 
+# Copiar los archivos .crt u otros necesarios
 COPY uploads /app/uploads
 
-ENTRYPOINT ["java","-cp","app:app/lib/*","sv.mh.fe.Application"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
