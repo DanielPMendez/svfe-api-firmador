@@ -1,10 +1,11 @@
-FROM openjdk:8-jdk-alpine
-WORKDIR /app
+# Usa tu imagen como base
+FROM convases/svfe-api-firmador
 
-# Copiar el jar generado por Maven
-COPY target1/svfe-api-firmador-0.1.1.jar app.jar
+# Crea una carpeta (opcional si ya existe)
+#RUN mkdir -p /uploads
 
-# Copiar los archivos .crt u otros necesarios
-COPY uploads /app/uploads
+# Copia los archivos locales en la nueva imagen
+COPY ./uploads /uploads
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# (Opcional) Mostrar el contenido para verificar durante el build
+RUN ls -la /uploads
